@@ -5,4 +5,4 @@
 Добавив ее в проект, можно создать Hello World бота за несколько секунд.<br>
 Что же она может?
 
-<img src="/img/command.jpg">
+<img src="/img/command.JPG">
