@@ -1,0 +1,4 @@
+
+RewriteRule On
+
+RewriteEngine .* Controller.php
