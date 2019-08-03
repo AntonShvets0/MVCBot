@@ -1,4 +1,4 @@
-<img src="logo.png">
+<img src="/img/logo.png">
 <h1>MVC BOT</h1>
 <hr>
 Данная библиотека облегчает создание ботов для VK через CallBack API
