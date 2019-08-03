@@ -7,7 +7,7 @@ $data = json_decode(file_get_contents('php://input'), true);
 define('VK', isset($data['object']) ?  $data['object'] : '');
 
 if ($data['secret'] != CONFIG['vkCallbackData']['secret']) {
-    return;
+    exit();
 }
 
 if (isset(Event::$event[$data['type']])) {
