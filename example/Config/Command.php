@@ -9,6 +9,3 @@ Handler::IgnoreMode(true, '/'); // Включает игнор мод. Бот б
 Handler::Register('hello-world', function () {
     return 'Hello world';
 });
-
-
-
