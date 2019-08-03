@@ -83,4 +83,20 @@ return "";
 </code><br>
 Именно поэтому, я сделал такую фишку. Если в возвращаемом значении, первый символ это @, то это выведет как ошибку:<br>
 <code>return "@Неизвестный символ";</code><br>Код выше, отправит сообщение пользователю такое: "ОШИБКА: Неизвестный символ"<br>
-<small>Символ можно сменить с @, на любой другой, в файле /Config/config.ini</code>
+<small>Символ можно сменить с @, на любой другой, в файле /Config/config.ini</small>
+
+<h2>Встроенные классы для работы с VK API</h2>
+<hr>
+В библиотеке встроены классы для работы с VK API. Список методов ниже:<br>
+<code>BotMessage::Send($message, $id = 'callback', $attach = [], $keyBoard = []);</code> -- отсылает сообщение пользователю. Если $id равняется callback, то это отправит тому пользователю, от которого пришел callback сайту.<br>
+<code>BotRequest::On($method, $data = [])</code> -- отправляет запрос на api.vk.com, и возвращает массив.
+<br>
+<code>BotGet::From()</code> -- возвращает from_id<br>
+<code>BotGet::Peer()</code> -- возвращает peer_id<br>
+<code>BotGet::Message()</code> -- возвращает сообщение пользователя<br>
+<h2>Встроенный логгер</h2>
+<hr>
+В библиотеку встроен логгер. Методы логгера ниже:<br>
+<code>Logger::Info($message)</code> -- создает запись в логах, с типом Default<br>
+<code>Logger::Error($message)</code> -- создает запись в логах, с типом Error
+<code>Logger::Warning($message)</code> -- создает запись в логах, с типом Warning
