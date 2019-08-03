@@ -125,7 +125,7 @@ BotMessage::Send($message, $id = 'callback', $attach = [], $keyBoard = []);
 
 Отсылает сообщение пользователю. Если $id равняется callback, то это отправит тому пользователю, от которого пришел callback сайту.<br>
 ```php
-BotRequest::On($method, $data = [])</code>
+BotRequest::On($method, $data = [])
 ```
 Отправляет запрос на api.vk.com, и возвращает массив.
 <br>
