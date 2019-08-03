@@ -17,7 +17,7 @@ class BotRequest
      * @return array
      * Отправляет запрос на VK API
      */
-    public static function On($method, $data = [])
+    public static function API($method, $data = [])
     {
         $data = array_merge($data, CONFIG['vkSendData']);
 

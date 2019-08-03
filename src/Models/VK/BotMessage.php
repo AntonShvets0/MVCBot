@@ -37,7 +37,7 @@ class BotMessage extends BotRequest
 
         Logger::Info("Message \"{$message}\" to {$id}");
 
-        self::On('messages.send', $data);
+        self::API('messages.send', $data);
     }
 
     /**

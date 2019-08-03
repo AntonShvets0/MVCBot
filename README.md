@@ -22,7 +22,7 @@ Handler::Register('hello-world', function () {
 Если это строка, то там указывается контроллер, и функция через @.<br>
 Т.е, строка:<br>
 Hello@World<br>
-Создаст экземпляр класса ControllerHello из файла /Controller/ControllerHello.php, и вызовет метод ActionWorld<br>
+Вызовет из класса ControllerHello (который находится в файле /Controller/ControllerHello.php) метод ActionWorld<br>
 <br>
 Так-же, можно передавать аргументы:<br>
 ```php
@@ -125,8 +125,8 @@ return "@Неизвестный символ";
 // Отсылает сообщение пользователю. Если $id равняется callback, то это отправит тому пользователю, от которого пришел callback сайту.
 BotMessage::Send($message, $id = 'callback', $attach = [], $keyBoard = []); 
 
-// Отправляет запрос на api.vk.com, и возвращает массив.
-BotRequest::On($method, $data = [])
+// Вызывает метод $method из VK API и возвращает массив с результатом.
+BotRequest::API($method, $data = [])
 
 // Возвращает from_id
 BotGet::From()
