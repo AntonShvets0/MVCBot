@@ -138,7 +138,7 @@ class Handler
         $message = explode(' ', $message);
 
         if (self::$useAppeal) {
-            $appeal = array_shift($appeal);
+            $appeal = array_shift($message);
             if (!self::$strictCheck) {
                 $appeal = self::FormatAppeal($appeal);
             }
