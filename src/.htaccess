@@ -1,4 +1,4 @@
 
-RewriteRule On
+RewriteEngine On
 
-RewriteEngine .* Controller.php
+RewriteRule .* Controller.php
