@@ -6,6 +6,7 @@
  */
 
 require_once ROOT . '/Models/VK/BotRequest.php';
+require_once ROOT . '/Models/VK/BotGet.php';
 require_once ROOT . '/Models/Utils.php';
 
 class BotMessage extends BotRequest
@@ -21,7 +22,7 @@ class BotMessage extends BotRequest
     public static function Send($message, $id = 'callback', $attach = [], $keyBoard = [])
     {
         if ($id == 'callback') {
-            // TODO Сделать получение id
+            $id = BotGet::Peer();
         }
 
         $keyBoard = self::CreateKeyBoard($keyBoard);
