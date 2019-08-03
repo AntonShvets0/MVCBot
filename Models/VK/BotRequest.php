@@ -6,6 +6,9 @@
  * Отправляет запросы
  */
 
+require_once ROOT . '/Models/Logger.php';
+
+
 class BotRequest
 {
     /**
