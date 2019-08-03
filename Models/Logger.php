@@ -9,11 +9,35 @@ class Logger
 {
     /**
      * @param string $message
+     */
+    public static function Error($message)
+    {
+        self::Add($message, 'Error');
+    }
+
+    /**
+     * @param string $message
+     */
+    public static function Warning($message)
+    {
+        self::Add($message, 'Warning');
+    }
+
+    /**
+     * @param string $message
+     */
+    public static function Info($message)
+    {
+        self::Add($message, 'Default');
+    }
+
+    /**
+     * @param string $message
      * @param string $type
      * @return void
      * Записывает лог в файл
      */
-    public static function Add($message, $type = 'Default')
+    private static function Add($message, $type = 'Default')
     {
         if (DEBUG) {
             $data = date('H:i:s');

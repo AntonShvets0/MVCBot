@@ -2,7 +2,7 @@
 /**
  * @version 0.1
  * @author LordOverLord0
- * https://github.com/LittleLolicon/MVCBot
+ * https://github.com/AntonShvets0/MVCBot
  * MVC CALLBACK BOT
  */
 
