@@ -7,10 +7,12 @@
 Что же она может?
 <br>
 <h2>Создание команд</h2>
-<code>Handler::Register('hello-world', function () {<br>
+
+```php
+Handler::Register('hello-world', function () {
     return 'Hello world';
-<br>});
-</code><br>
+});
+```
 Как вы можете видеть в коде выше -- это делается в пару строк.<br>
 Вы вызываете метод Register из класса Handler в файле /Config/Command.php<br>
 <br>
@@ -23,9 +25,11 @@ Hello@World<br>
 Создаст экземпляр класса ControllerHello из файла /Controller/ControllerHello.php, и вызовет метод ActionWorld<br>
 <br>
 Так-же, можно передавать аргументы:<br>
-<code>Handler::Register('name', function ($name, $age) {<br>
+```php
+Handler::Register('name', function ($name, $age) {
     return "Hello, {$name} ({$age} years old)";
-<br>});
+});
+```
 </code><br>
 При отправке боту такого сообщения:<br>
 name Антон 17<br>
@@ -34,33 +38,42 @@ name Антон 17<br>
 <h2>Регистрация Event'ов</h2>
 Допустим, нам надо захватить приходящий от VK тип message_new, как это сделать?<br>
 Пишем такие строчки в файле /Config/Event.php:<br>
-<code>Event::Register('message_new', function () {<br>
-          Handler::Run();<br>
-          Logger::Info("Пришел тип message_new");<br>
-      });
-</code><br>
+```php
+Event::Register('message_new', function () {
+      Handler::Run();
+      Logger::Info("Пришел тип message_new");
+});
+```
 Теперь анонимная функция (или строка) которую вы указали во втором аргументе, будет вызываться каждый раз, когда будет приходить этот тип
 <h2>Дополнительно</h2>
 <hr>
 Конечно-же, это не все возможности библиотеки.<br>
 <h3>Обращения к боту</h3><br>Бота можно заставить игнорировать сообщения, в которых не присутствует обращение к нему. Это делается так:<br>
-<code>
-Handler::UseAppeal(true);<br>
+
+```php
+Handler::UseAppeal(true);
 Handler::AddAppeal('Bot');
-</code> <small>Этот код будет работать только в файле /Config/Command.php, или /Config/Event.php</small><br>
+```
+<small>Этот код будет работать только в файле /Config/Command.php, или /Config/Event.php</small><br>
 Теперь, бот не будет отзываться на такие сообщения:<br>
 name Антон 17<br>
 Но, будет отзываться на:<br>
 Bot name Антон 17<br>
 Так-же, в первый аргумент метода AddApeal можно передать не только string, но и array.<br>
-<code>Handler::AddApeal(['Бот', 'Ботец']);</code><br>
+```php
+Handler::AddApeal(['Бот', 'Ботец']);
+```
 Теперь, бот будет отзываться и на Бот, и на Ботец.
 
 <h3>Игнор-режим</h3>
 Еще, бота можно заставить игнорировать сообщения, которые не начинаются с определенного символа.<br>
-<code>Handler::IgnoreMode(true, $char);</code><br>
+```php
+Handler::IgnoreMode(true, $char);
+```
 $char -- символ, с которого должно начинаться сообщение. Т.е, такой код:
-<code>Handler::IgnoreMode(true, '/');</code><br>
+```php
+Handler::IgnoreMode(true, '/');
+```
 Сделает так, что вот такие обращения не будут работать:<br>
 name Антон 17<br>
 А такие будут:<br>
@@ -74,32 +87,71 @@ name Антон 17<br>
 При выключенной строгой проверке, это сообщение вызовет функцию name<br>
 При включенной -- выведет ошибку о том, что такая функция не обнаружена.
 
-Включить строгую проверку: <code>Handler::SetStrict(true);</code> <small>Включение строгой проверки нужно поместить в начало файла Config/Command.php, иначе не будет работать.</small>
+Включить строгую проверку: 
+```php
+Handler::SetStrict(true);
+```
+<small>Включение строгой проверки нужно поместить в начало файла Config/Command.php, иначе не будет работать.</small>
 <h3>Ошибки</h3><br>
 Согласитесь, неудобно писать каждый раз, при ошибке:<br>
-<code>
-BotMessage::Send('ОШИБКА: Неизвестный символ');<br>
+```php
+BotMessage::Send('ОШИБКА: Неизвестный символ');
 return "";
-</code><br>
+```
+
+<br>
 Именно поэтому, я сделал такую фишку. Если в возвращаемом значении, первый символ это @, то это выведет как ошибку:<br>
-<code>return "@Неизвестный символ";</code><br>Код выше, отправит сообщение пользователю такое: "ОШИБКА: Неизвестный символ"<br>
+
+```php
+return "@Неизвестный символ";
+```
+
+
+<br>Код выше, отправит сообщение пользователю такое: "ОШИБКА: Неизвестный символ"<br>
 <small>Символ можно сменить с @, на любой другой, в файле /Config/config.ini</small>
 
 <h2>Встроенные классы для работы с VK API</h2>
 <hr>
 В библиотеке встроены классы для работы с VK API. Список методов ниже:<br>
-<code>BotMessage::Send($message, $id = 'callback', $attach = [], $keyBoard = []);</code> -- отсылает сообщение пользователю. Если $id равняется callback, то это отправит тому пользователю, от которого пришел callback сайту.<br>
-<code>BotRequest::On($method, $data = [])</code> -- отправляет запрос на api.vk.com, и возвращает массив.
+
+```php
+BotMessage::Send($message, $id = 'callback', $attach = [], $keyBoard = []);
+```
+
+Отсылает сообщение пользователю. Если $id равняется callback, то это отправит тому пользователю, от которого пришел callback сайту.<br>
+```php
+BotRequest::On($method, $data = [])</code>
+```
+Отправляет запрос на api.vk.com, и возвращает массив.
 <br>
-<code>BotGet::From()</code> -- возвращает from_id<br>
-<code>BotGet::Peer()</code> -- возвращает peer_id<br>
-<code>BotGet::Message()</code> -- возвращает сообщение пользователя<br>
+```php
+BotGet::From()
+```
+Возвращает from_id<br>
+```php
+BotGet::Peer()
+```
+Возвращает peer_id<br>
+```php
+BotGet::Message()
+``` 
+Возвращает сообщение пользователя<br>
 <h2>Встроенный логгер</h2>
 <hr>
 В библиотеку встроен логгер. Методы логгера ниже:<br>
-<code>Logger::Info($message)</code> -- создает запись в логах, с типом Default<br>
-<code>Logger::Error($message)</code> -- создает запись в логах, с типом Error<br>
-<code>Logger::Warning($message)</code> -- создает запись в логах, с типом Warning
+
+```php
+Logger::Info($message)
+```
+Создает запись в логах, с типом Default<br>
+```php
+Logger::Error($message)
+```
+Создает запись в логах, с типом Error<br>
+```php
+Logger::Warning($message)
+```
+Создает запись в логах, с типом Warning
 <h2>Клавиатура ботов</h2>
 <hr>
 Я немного изменил синтаксис клавиатуры ботов. Т.к оригинальный синтаксис от ВК меня пугает.<br>
