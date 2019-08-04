@@ -63,6 +63,7 @@ class BotMessage extends BotRequest
             $json['buttons'][] = self::CreateKeyBoardRows($item);
         }
 
+
         return json_encode($json, JSON_UNESCAPED_UNICODE);
     }
 
@@ -75,7 +76,7 @@ class BotMessage extends BotRequest
         $result = [];
 
         foreach ($array as $name => $data) {
-            $result[] = ['action' => ['label' => $name, 'payload' => json_encode($data['cmd'])], 'color' => $data['clr']];
+            $result[] = ['action' => ['label' => $name, 'payload' => json_encode($data['cmd']), 'type' => 'text'], 'color' => $data['clr']];
         }
 
         return $result;
