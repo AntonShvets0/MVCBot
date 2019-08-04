@@ -214,7 +214,16 @@ class BotGet {
     public static function Message(): string
     
     // Возвращает true, если пользователь отправил PayLoad вместе с сообщением
-    public static function isPayLoad(): bool
+    public static function HasPayLoad(): bool
+    
+    // Возвратит 1, если пользователь с таким id мужчина, и 0, если женщина.
+    public static function Gender($id = 'callback'): int
+    
+    // Возвращает имя и фамилию пользователя. Если $lastName = false, то фамилию не будет возвращать
+    public static function Name($lastName = true, $nameCase = 'nom', $id = 'callback'): string
+    
+    // Возвращает информацию о пользователях. $ids может быть массивом, и строкой. 
+    public static function Info($ids = 'callback', $fields = [], $nameCase = 'nom'): array
 }
 
 class BotWall {

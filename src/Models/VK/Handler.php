@@ -170,7 +170,7 @@ class Handler
 
         $command = array_shift($message);
 
-        if (!isset(self::$functionList[$command]) || (self::$functionList[$command][1] && !BotGet::isPayLoad())) {
+        if (!isset(self::$functionList[$command]) || (self::$functionList[$command][1] && !BotGet::hasPayLoad())) {
             $str = str_replace('{command}', $command, CONFIG['data']['unknownCommand']);
             BotMessage::Send($str);
             return;
