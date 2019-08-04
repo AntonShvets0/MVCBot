@@ -10,6 +10,8 @@ if ($data['secret'] != CONFIG['vkCallbackData']['secret']) {
     exit();
 }
 
+define('GROUP', $data['group_id']);
+
 if (isset(Event::$event[$data['type']])) {
     FunctionHandler::Call(Event::$event[$data['type']]);
 }
