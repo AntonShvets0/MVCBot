@@ -78,7 +78,7 @@ class Handler
      * @return void
      * Включает/Отключает "игнор мод", когда бот не реагирует на сообщения, если они не начинаются на определенную букву
      */
-    public static function IgnoreMode($bool = true)
+    public static function StartsWith($bool = true)
     {
         self::$ignoreOtherMessages = $bool;
     }
@@ -88,11 +88,11 @@ class Handler
      * @return void
      * Добавляет символы, с которых должно начинаться сообщение
      */
-    public static function AddNoIgnoreChar($char)
+    public static function AddStartsWith($char)
     {
         if (is_array($char)) {
             array_map(function ($item) {
-                self::AddNoIgnoreChar($item);
+                self::AddStartsWith($item);
             }, $char);
             return;
         }

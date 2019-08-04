@@ -81,15 +81,15 @@ Handler::AddApeal(['Бот', 'Ботец']);
 Еще, бота можно заставить игнорировать сообщения, которые не начинаются с определенного символа.<br>
 
 ```php
-Handler::IgnoreMode($bool);
-Handler::AddNoIgnoreChar($char);
+Handler::StartsWith($bool);
+Handler::AddStartsWith($char);
 ```
 
 $char — символ, с которого должно начинаться сообщение. Это может быть array, или string.<Br> Т.е, такой код:
 
 ```php
-Handler::IgnoreMode(true);
-Handler::AddNoIgnoreChar(['/', '$']);
+Handler::StartsWith(true);
+Handler::AddStartsWith(['/', '$']);
 ```
 
 Сделает так, что вот такие обращения не будут работать:<br>
