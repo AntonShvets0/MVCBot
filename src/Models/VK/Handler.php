@@ -178,13 +178,23 @@ class Handler
 
         $response = FunctionHandler::Call(self::$functionList[$command][0], $message);
 
-        if (mb_substr($response, 0, 1) == CONFIG['data']['errorChar']) {
+        $message = $response;
+        $attach = [];
+        $keyBoard = [];
+
+        if (is_array($response)) {
+            $message = $response[0];
+            $attach = $response[1];
+            $keyBoard = $response[2];
+        }
+
+        if (mb_substr($message, 0, 1) == CONFIG['data']['errorChar']) {
             $str = str_replace(['{command}', '{error}'], [$command, mb_substr($response, 1)], CONFIG['data']['error']);
-            BotMessage::Send($str);
+            BotMessage::Send($str, 'callback', $attach, $keyBoard);
             return;
         }
 
-        BotMessage::Send($response);
+        BotMessage::Send($response, 'callback', $attach, $keyBoard);
     }
 
     /**

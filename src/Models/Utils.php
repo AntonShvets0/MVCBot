@@ -8,6 +8,16 @@
 class Utils
 {
     /**
+     * @param $index
+     * @param bool $return
+     * @return bool
+     */
+    public static function IfExistsReturn($index, $return = false)
+    {
+        return isset(VK[$index]) ? VK[$index] : $return;
+    }
+
+    /**
      * @param $array
      * @param string $separator
      * @return string

@@ -14,7 +14,7 @@ class BotMessage extends BotRequest
     /**
      * @param string $message
      * @param string|int $id
-     * @param array $attach
+     * @param array|string $attach
      * @param array $keyBoard
      * @return void
      * Отправляет сообщение
@@ -22,7 +22,7 @@ class BotMessage extends BotRequest
     public static function Send($message, $id = 'callback', $attach = [], $keyBoard = [])
     {
         if ($id == 'callback') {
-            $id = BotGet::Peer();
+            $id = BotGet::GetID();
         }
 
         $keyBoard = self::CreateKeyBoard($keyBoard);

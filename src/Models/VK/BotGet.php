@@ -5,12 +5,23 @@ class BotGet
 {
     public static function From()
     {
-        return VK['from_id'];
+        return Utils::IfExistsReturn('from_id');
     }
 
     public static function Peer()
     {
-        return VK['peer_id'];
+        return Utils::IfExistsReturn('peer_id');
+    }
+
+    public static function User()
+    {
+        return Utils::IfExistsReturn('user_id');
+    }
+
+    public static function GetID()
+    {
+        return self::Peer() ? self::Peer() :
+            (self::From() ? self::From() : self::User());
     }
 
     public static function Message()
