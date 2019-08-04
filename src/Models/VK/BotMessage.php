@@ -12,6 +12,23 @@ require_once ROOT . '/Models/Utils.php';
 class BotMessage extends BotRequest
 {
     /**
+     * @param int $messageID
+     * @param string $text
+     * @param array $attach
+     * @param string|int $peerID
+     * @return bool
+     * Редактирует сообщение
+     */
+    public static function Edit($messageID, $text, $attach = [], $peerID = 'callback')
+    {
+        if ($peerID == 'callback') {
+            $peerID = BotGet::Peer();
+        }
+
+        return self::API('messages.edit', ['peer_id' => $peerID, 'message' => $text, 'message_id' => $messageID, 'attachment' => Utils::Join($attach)]);
+    }
+
+    /**
      * @param bool $bool
      * @param string|int $peerID
      * @return bool

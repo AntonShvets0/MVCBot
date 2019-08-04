@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * @class BotWall
+ * Нужен для работы со стеной
+ */
+
 require_once ROOT . '/Models/VK/BotRequest.php';
 require_once ROOT . '/Models/Utils.php';
 

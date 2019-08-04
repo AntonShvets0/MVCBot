@@ -14,7 +14,7 @@ class BotRequest
     /**
      * @param string $method
      * @param array $data
-     * @return array|false
+     * @return array|string|int|false
      * Отправляет запрос на VK API
      */
     public static function API($method, $data = [])

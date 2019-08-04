@@ -1,4 +1,10 @@
 <?php
+
+/**
+ * @class BotGet
+ * Нужен для получения информации
+ */
+
 require_once ROOT . '/Models/Utils.php';
 
 class BotGet

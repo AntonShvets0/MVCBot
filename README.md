@@ -20,12 +20,11 @@ Handler::Register('hello-world', function () {
 <br>
 Первый аргумент — это название функции. Может быть или string, или array. <br> 
 Второй — это сама функция, которая вызовется в случае набора команды. Это может быть или анонимная функция, или строка<br>
-Третий аргумент — необязательный для указания параметр. Если он установлен на true, то доступ к этой команде будет возможен только через клавиатуру ботов (payload).
-<br>
 Если это строка, то там указывается имя класса, и метод через @.<br>
 Т.е, строка:<br>
 Hello@World<br>
 Вызовет из класса ControllerHello (который находится в файле /Controller/ControllerHello.php) метод ActionWorld<br>
+Третий аргумент — необязательный для указания параметр. Если он установлен на true, то доступ к этой команде будет возможен только через клавиатуру ботов (payload).
 <br>
 Так-же, можно передавать аргументы:<br>
 ```php
@@ -136,6 +135,20 @@ class BotMessage {
     
     // Если $bool == false, то бот будет записывать голосовое сообщение, если true, то будет печатать сообщение
     public static function Activity($bool = true, $peerID = 'callback'): bool
+
+    // Редактирует сообщение
+    public static function Edit($messageID, $text, $attach = [], $peerID = 'callback'): bool
+}
+
+class BotConversation {
+    // Удаляет пользователя из беседы
+    public static function DeleteUser($user, $peerID = 'callback'): bool
+    
+    // Закрепляет сообщение
+    public static function Pin($messageID, $peerID = 'callback'): bool
+    
+    // Изменяет заголовок беседы
+    public static function Title($title, $peerID = 'callback'): bool
 }
 
 class BotRequest {
