@@ -53,7 +53,7 @@ Event::Register('message_new', function () {
 <h3>Обращения к боту</h3><br>Бота можно заставить игнорировать сообщения, в которых не присутствует обращение к нему. Это делается так:<br>
 
 ```php
-Handler::UseAppeal(true);
+Handler::Appeal(true);
 Handler::AddAppeal('Bot');
 ```
 <small>Этот код будет работать только в файле /Config/Command.php, или /Config/Event.php</small><br>
@@ -71,19 +71,22 @@ Handler::AddApeal(['Бот', 'Ботец']);
 Еще, бота можно заставить игнорировать сообщения, которые не начинаются с определенного символа.<br>
 
 ```php
-Handler::IgnoreMode(true, $char);
+Handler::IgnoreMode($bool);
+Handler::AddNoIgnoreChar($char);
 ```
 
-$char — символ, с которого должно начинаться сообщение. Т.е, такой код:
+$char — символ, с которого должно начинаться сообщение. Это может быть array, или string.<Br> Т.е, такой код:
 
 ```php
-Handler::IgnoreMode(true, '/');
+Handler::IgnoreMode(true);
+Handler::AddNoIgnoreChar(['/', '$']);
 ```
 
 Сделает так, что вот такие обращения не будут работать:<br>
 name Антон 17<br>
 А такие будут:<br>
-/name Антон 17
+/name Антон 17<br>
+$name Антон 17
 
 <h3>Строгая проверка</h3><br>
 Можно включить строгую проверку. Она будет сверять регистр функций, и обращений.<br>
@@ -95,15 +98,14 @@ name Антон 17<br>
 
 Включить строгую проверку: 
 ```php
-Handler::SetStrict(true);
+Handler::Strict(true);
 ```
 <small>Включение строгой проверки нужно поместить в начало файла Config/Command.php, иначе не будет работать.</small>
 <h3>Ошибки</h3><br>
 Согласитесь, неудобно писать каждый раз, при ошибке:<br>
 
 ```php
-BotMessage::Send('ОШИБКА: Неизвестный символ');
-return "";
+return "ОШИБКА: Неизвестный символ";
 ```
 
 <br>
@@ -123,19 +125,22 @@ return "@Неизвестный символ";
 
 ```php
 // Отсылает сообщение пользователю. Если $id равняется callback, то это отправит тому пользователю, от которого пришел callback сайту.
-BotMessage::Send($message, $id = 'callback', $attach = [], $keyBoard = []); 
+BotMessage::Send($message, $id = 'callback', $attach = [], $keyBoard = []): void 
 
 // Вызывает метод $method из VK API и возвращает массив с результатом.
-BotRequest::API($method, $data = [])
+BotRequest::API($method, $data = []): string|bool
 
 // Возвращает from_id
-BotGet::From()
+BotGet::From(): int
 
 // Возвращает peer_id
-BotGet::Peer()
+BotGet::Peer(): int
 
 // Возвращает сообщение пользователя
-BotGet::Message()
+BotGet::Message(): string
+
+// Возвращает true, если пользователь отправил PayLoad вместе с сообщением
+BotGet::isPayLoad(): bool
 ``` 
 <h2>Встроенный логгер</h2>
 <hr>
@@ -143,13 +148,13 @@ BotGet::Message()
 
 ```php
 // Создает запись в логах, с типом Default
-Logger::Info($message)
+Logger::Info($message): void
 
 // Создает запись в логах, с типом Error
-Logger::Error($message)
+Logger::Error($message): void
 
 // Создает запись в логах, с типом Warning
-Logger::Warning($message)
+Logger::Warning($message): void
 ```
 <h2>Клавиатура ботов</h2>
 <hr>
@@ -163,14 +168,14 @@ $keyBoard = [
 
     [ // первая строка
         "Первая кнопка" => [ // Название кнопки
-            "clr" => "primary", // цвет,
-            "cmd" => ["hello", "world"] // payload
+            "primary", // цвет,
+            ["hello", "world"] // payload
         ]
     ],
     [ // Вторая строка
         "Вторая кнопка" => [ // Название кнопки
-            "clr" => "negative", // цвет,
-            "cmd" => ["hello", "world2"] // payload
+            "negative", // цвет,
+            ["hello", "world2"] // payload
         ]
     ]
 ];

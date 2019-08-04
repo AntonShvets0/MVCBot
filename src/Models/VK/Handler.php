@@ -36,10 +36,10 @@ class Handler
     private static $ignoreOtherMessages = false;
 
     /**
-     * @var string
+     * @var array
      * Символ, с которого должно начинаться сообщение (только для Игнор Режима)
      */
-    private static $noIgnoreChar = "";
+    private static $noIgnoreChar = [];
 
     /**
      * @var array
@@ -50,14 +50,15 @@ class Handler
     /**
      * @param string|array $function
      * @param mixed $controller
+     * @param bool $onlyPayLoad
      * @return bool
      * Регистрирует новую функцию
      */
-    public static function Register($function, $controller)
+    public static function Register($function, $controller, $onlyPayLoad = false)
     {
         if (is_array($function)) {
-            array_map(function ($item) use ($controller) {
-                self::Register($item, $controller);
+            array_map(function ($item) use ($controller, $onlyPayLoad) {
+                self::Register($item, $controller, $onlyPayLoad);
             }, $function);
         } else {
             if (!self::$strictCheck) {
@@ -67,38 +68,49 @@ class Handler
                 Logger::Warning("Function {$function} exists");
                 return false;
             }
-            self::$functionList[$function] = $controller;
+            self::$functionList[$function] = [$controller, $onlyPayLoad];
         }
         return true;
     }
 
     /**
      * @param bool $bool
-     * @param string $noIgnoreChar
      * @return void
      * Включает/Отключает "игнор мод", когда бот не реагирует на сообщения, если они не начинаются на определенную букву
      */
-    public static function IgnoreMode($bool, $noIgnoreChar = "")
+    public static function IgnoreMode($bool = true)
     {
         self::$ignoreOtherMessages = $bool;
-        self::$noIgnoreChar = $noIgnoreChar;
+    }
+
+    /**
+     * @param array|string $char
+     * @return void
+     * Добавляет символы, с которых должно начинаться сообщение
+     */
+    public static function AddNoIgnoreChar($char)
+    {
+        if (is_array($char)) {
+            array_map(function ($item) {
+                self::AddNoIgnoreChar($item);
+            }, $char);
+            return;
+        }
+
+        if (!self::$strictCheck) {
+            $char = mb_strtolower($char);
+        }
+
+        self::$noIgnoreChar[] = $char;
     }
 
     /**
      * @param bool $bool
      * Включает/Отключает функцию обращений. Бот не будет реагировать на сообщения, если перед ними не стоит обращение к боту
      */
-    public static function UseAppeal($bool)
+    public static function Appeal($bool)
     {
         self::$useAppeal = $bool;
-    }
-
-    /**
-     * @param bool $bool
-     */
-    public static function SetStrict($bool)
-    {
-        self::$strictCheck = $bool;
     }
 
     /**
@@ -112,12 +124,20 @@ class Handler
             array_map(function ($item) {
                 self::AddAppeal($item);
             }, $appeal);
-        } else {
-            if (!self::$strictCheck) {
-                $appeal = self::FormatAppeal($appeal);
-            }
-            self::$appealList[] = $appeal;
+            return;
         }
+        if (!self::$strictCheck) {
+            $appeal = self::FormatAppeal($appeal);
+        }
+        self::$appealList[] = $appeal;
+    }
+
+    /**
+     * @param bool $bool
+     */
+    public static function Strict($bool)
+    {
+        self::$strictCheck = $bool;
     }
 
     /**
@@ -129,7 +149,7 @@ class Handler
         $message = BotGet::Message();
         if (self::$ignoreOtherMessages) {
             $firstChar = mb_substr($message, 0, 1);
-            if ($firstChar != self::$noIgnoreChar) {
+            if (!in_array($firstChar, self::$noIgnoreChar)) {
                 return;
             }
             $message = mb_substr($message, 1);
@@ -150,13 +170,13 @@ class Handler
 
         $command = array_shift($message);
 
-        if (!isset(self::$functionList[$command])) {
+        if (!isset(self::$functionList[$command]) || (self::$functionList[$command][1] && !BotGet::isPayLoad())) {
             $str = str_replace('{command}', $command, CONFIG['data']['unknownCommand']);
             BotMessage::Send($str);
             return;
         }
 
-        $response = FunctionHandler::Call(self::$functionList[$command], $message);
+        $response = FunctionHandler::Call(self::$functionList[$command][0], $message);
 
         if (mb_substr($response, 0, 1) == CONFIG['data']['errorChar']) {
             $str = str_replace(['{command}', '{error}'], [$command, mb_substr($response, 1)], CONFIG['data']['error']);
@@ -167,6 +187,11 @@ class Handler
         BotMessage::Send($response);
     }
 
+    /**
+     * @param $appeal
+     * @return string
+     * Форматирует обращение
+     */
     private static function FormatAppeal($appeal)
     {
         $lastChar = mb_substr($appeal, mb_strlen($appeal) - 1);
