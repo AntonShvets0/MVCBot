@@ -12,11 +12,52 @@ require_once ROOT . '/Models/Utils.php';
 class BotMessage extends BotRequest
 {
     /**
+     * @param bool $bool
+     * @param string|int $peerID
+     * @return bool
+     * Статус набора текста
+     */
+    public static function Activity($bool = true, $peerID = 'callback')
+    {
+        if ($peerID == 'callback') {
+            $peerID = BotGet::GetID();
+        }
+
+        $type = $bool ? 'typing' : 'audiomessage';
+        $data = self::API('messages.setActivity', ['peer_id' => $peerID, 'type' => $type]);
+
+        return $data;
+    }
+
+    /**
+     * @param int|array $messageID
+     * @return bool
+     * Удаляет сообщение
+     */
+    public static function Delete($messageID)
+    {
+        $messageID = Utils::Join($messageID);
+
+        $data = self::API('messages.delete', ['message_ids' => $messageID, 'delete_for_all' => 1]);
+        $bool = false;
+
+        foreach ($data as $val) {
+            if ($val == 0) {
+                $bool = false;
+            } else {
+                $bool = true;
+            }
+        }
+
+        return $bool;
+    }
+
+    /**
      * @param string $message
      * @param string|int $id
      * @param array|string $attach
      * @param array $keyBoard
-     * @return void
+     * @return bool
      * Отправляет сообщение
      */
     public static function Send($message, $id = 'callback', $attach = [], $keyBoard = [])
@@ -37,7 +78,8 @@ class BotMessage extends BotRequest
 
         Logger::Info("Message \"{$message}\" to {$id}");
 
-        self::API('messages.send', $data);
+        $data = self::API('messages.send', $data);
+        return $data ? true : false;
     }
 
     /**

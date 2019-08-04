@@ -14,7 +14,7 @@ class BotRequest
     /**
      * @param string $method
      * @param array $data
-     * @return array
+     * @return array|false
      * Отправляет запрос на VK API
      */
     public static function API($method, $data = [])
@@ -27,7 +27,7 @@ class BotRequest
 
         if (isset($response['error'])) {
             Logger::Error("Response error(#{$response['error']['error_code']}): {$response['error']['error_msg']}");
-            return [];
+            return false;
         }
 
         return $response['response'];

@@ -1,7 +1,5 @@
-<p align="center">
-<img src="/img/logo.png">
-<h1>MVC BOT</h1>
-</p>
+<img align="center" src="/img/logo.png">
+<h1 align="center">MVC BOT</h1>
 <hr>
 Данная библиотека облегчает создание ботов для VK через CallBack API
 в несколько сотен раз<br>
@@ -128,10 +126,16 @@ return "@Неизвестный символ";
 
 ```php
 // Отсылает сообщение пользователю. Если $id равняется callback, то это отправит тому пользователю, от которого пришел callback сайту.
-BotMessage::Send($message, $id = 'callback', $attach = [], $keyBoard = []): void 
+BotMessage::Send($message, $id = 'callback', $attach = [], $keyBoard = []): bool
+
+// Удаляет сообщение
+BotMessage::Delete($messageID): bool
+
+// Если $bool == false, то бот будет записывать голосовое сообщение, если true, то будет печатать сообщение
+BotMessage::Activity($bool = true, $peerID = 'callback'): bool
 
 // Вызывает метод $method из VK API и возвращает массив с результатом.
-BotRequest::API($method, $data = []): string|bool
+BotRequest::API($method, $data = []): string|false
 
 // Возвращает from_id
 BotGet::From(): int
