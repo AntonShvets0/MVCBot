@@ -1,5 +1,7 @@
+<p align="center">
 <img align="center" src="/img/logo.png">
 <h1 align="center">MVC BOT</h1>
+</p>
 <hr>
 Данная библиотека облегчает создание ботов для VK через CallBack API
 в несколько сотен раз<br>
@@ -125,35 +127,44 @@ return "@Неизвестный символ";
 В библиотеке встроены классы для работы с VK API. Список методов ниже:<br>
 
 ```php
-// Отсылает сообщение пользователю. Если $id равняется callback, то это отправит тому пользователю, от которого пришел callback сайту.
-BotMessage::Send($message, $id = 'callback', $attach = [], $keyBoard = []): bool
+class BotMessage {
+    // Отсылает сообщение пользователю. Если $id равняется callback, то это отправит тому пользователю, от которого пришел callback сайту.
+    public static function Send($message, $id = 'callback', $attach = [], $keyBoard = []): bool
 
-// Удаляет сообщение
-BotMessage::Delete($messageID): bool
+    // Удаляет сообщение
+    public static function Delete($messageID): bool
+    
+    // Если $bool == false, то бот будет записывать голосовое сообщение, если true, то будет печатать сообщение
+    public static function Activity($bool = true, $peerID = 'callback'): bool
+}
 
-// Если $bool == false, то бот будет записывать голосовое сообщение, если true, то будет печатать сообщение
-BotMessage::Activity($bool = true, $peerID = 'callback'): bool
+class BotRequest {
+    // Вызывает метод $method из VK API и возвращает массив с результатом.
+    public static function API($method, $data = []): array|false
+}
 
-// Вызывает метод $method из VK API и возвращает массив с результатом.
-BotRequest::API($method, $data = []): string|false
+class BotGet {
+    // Возвращает from_id
+    public static function From(): int
+    
+    // Возвращает peer_id
+    public static function Peer(): int
+    
+    // Возвращает сообщение пользователя
+    public static function Meessage(): string
+    
+    // Возвращает true, если пользователь отправил PayLoad вместе с сообщением
+    public static function isPayLoad(): bool
+}
 
-// Возвращает from_id
-BotGet::From(): int
+class BotWall {
+    // Добавляет комментарий к посту. Если $ownerID указан как callback, то возьметься id группы бота
+    public static function AddComment($postID, $text, $ownerID = 'callback', $attach = [], $replyTo = 0, $stickerId = 0): void
+    
+    // Открывает/Закрывает комментарии к посту. $type может быть только open, или close. 
+    public static function Comment($postID, $type = 'close'): void
+}
 
-// Возвращает peer_id
-BotGet::Peer(): int
-
-// Возвращает сообщение пользователя
-BotGet::Message(): string
-
-// Возвращает true, если пользователь отправил PayLoad вместе с сообщением
-BotGet::isPayLoad(): bool
-
-// Добавляет комментарий к посту. Если $ownerID указан как callback, то возьметься id группы бота
-BotWall::AddComment($postID, $text, $ownerID = 'callback', $attach = [], $replyTo = 0, $stickerId = 0): void
-
-// Открывает/Закрывает комментарии к посту. $type может быть только open, или close. 
-BotWall::Comment($postID, $type = 'close'): void
 ``` 
 <h2>Встроенный логгер</h2>
 <hr>
