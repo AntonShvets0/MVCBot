@@ -25,14 +25,13 @@ Handler::Register('hello-world', function () {
 }, false);
 ```
 Как вы можете видеть в коде выше — это делается в пару строк.<br>
-Вы вызываете метод Register из класса Handler в файле /Config/Command.php<br>
+Вы вызываете метод Register из класса Handler в файле `/Config/Command.php` <br>
 <br>
 Первый аргумент — это название функции. Может быть или string, или array. <br> 
 Второй — это сама функция, которая вызовется в случае набора команды. Это может быть или анонимная функция, или строка<br>
 Если это строка, то там указывается имя класса, и метод через @.<br>
-Т.е, строка:<br>
-Hello@World<br>
-Вызовет из класса ControllerHello (который находится в файле /Controller/ControllerHello.php) метод ActionWorld<br>
+Т.е, строка: `Hello@World` <br>
+Вызовет из класса ControllerHello (который находится в файле `/Controller/ControllerHello.php` ) метод `ActionWorld` <br>
 Третий аргумент — необязательный для указания параметр. Если он установлен на true, то доступ к этой команде будет возможен только через клавиатуру ботов (payload).
 <br>
 Так-же, можно передавать аргументы:<br>
@@ -42,13 +41,13 @@ Handler::Register('name', function ($name, $age) {
 });
 ```
 <br>
-При отправке боту такого сообщения:<br>
-name Антон 17<br>
-Человеку в ответ бот отошлет "Hello, Антон (17 years old)"
+<img src="/img/nameanton17.jpg">
 <br>
 <h2>Регистрация Event'ов</h2>
 Допустим, нам надо захватить приходящий от VK тип message_new, как это сделать?<br>
-Пишем такие строчки в файле /Config/Event.php:<br>
+Пишем такие строчки в файле 
+
+`/Config/Event.php`
 
 ```php
 Event::Register('message_new', function () {
@@ -67,7 +66,7 @@ Event::Register('message_new', function () {
 Handler::Appeal(true);
 Handler::AddAppeal('Bot');
 ```
-<small>Этот код будет работать только в файле /Config/Command.php, или /Config/Event.php</small><br>
+<small>Этот код будет работать только в файле ` /Config/Command.php ` , или ` /Config/Event.php` </small><br>
 Теперь, бот не будет отзываться на такие сообщения:<br>
 name Антон 17<br>
 Но, будет отзываться на:<br>
@@ -128,7 +127,7 @@ return "@Неизвестный символ";
 
 
 <br>Код выше, отправит сообщение пользователю такое: "ОШИБКА: Неизвестный символ"<br>
-<small>Символ можно сменить с @, на любой другой, в файле /Config/config.ini</small>
+<small>Символ можно сменить с @, на любой другой, в файле `/Config/config.ini` </small>
 
 <h2>Встроенные классы для работы с VK API</h2>
 <hr>
