@@ -38,4 +38,19 @@ class Utils
 
         return $result;
     }
+
+    /**
+     * @param $numberOf
+     * @param $value
+     * @param $suffix
+     * @return string
+     */
+    public static function Num2Str($numberOf, $value, $suffix)
+    {
+        $keys = [2, 0, 1, 1, 1, 2];
+        $mod = $numberOf % 100;
+        $suffix_key = $mod > 4 && $mod < 20 ? 2 : $keys[min($mod%10, 5)];
+
+        return $value . $suffix[$suffix_key];
+    }
 }
