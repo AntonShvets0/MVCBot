@@ -6,9 +6,9 @@
 <a href="#создание-команд" align="center">1. Создание команд</a><br>
 <a href="#регистрация-eventов" align="center">2. Регистрация Event-ов</a><br>
 <a href="#дополнительно" align="center">3. Дополнительно</a><br>
-<a href="#встроенные-классы-для-работы-с-vk-api" align="center">4. Встроенные классы для работы с VK API</a><br>
-<a href="#встроенный-логгер" align="center">5. Встроенный Логгер</a><br>
-<a href="#клавиатура-ботов" align="center">6. Клавиатура Ботов</a>
+<a href="#встроенный-логгер" align="center">4. Встроенный Логгер</a><br>
+<a href="#клавиатура-ботов" align="center">5. Клавиатура Ботов</a><br>
+<a href="#встроенные-классы-для-работы-с-vk-api" align="center">6. Встроенные классы для работы с VK API</a><br>
 </p>
 </p>
 <hr>
@@ -128,65 +128,6 @@ return "@Неизвестный символ";
 
 <br>Код выше, отправит сообщение пользователю такое: "ОШИБКА: Неизвестный символ"<br>
 <small>Символ можно сменить с @, на любой другой, в файле `/Config/config.ini` </small>
-
-<h2>Встроенные классы для работы с VK API</h2>
-<hr>
-В библиотеке встроены классы для работы с VK API. Список методов ниже:<br>
-
-```php
-class BotMessage {
-    // Отсылает сообщение пользователю. Если $id равняется callback, то это отправит тому пользователю, от которого пришел callback сайту.
-    public static function Send($message, $id = 'callback', $attach = [], $keyBoard = []): bool
-
-    // Удаляет сообщение
-    public static function Delete($messageID): bool
-    
-    // Если $bool == false, то бот будет записывать голосовое сообщение, если true, то будет печатать сообщение
-    public static function Activity($bool = true, $peerID = 'callback'): bool
-
-    // Редактирует сообщение
-    public static function Edit($messageID, $text, $attach = [], $peerID = 'callback'): bool
-}
-
-class BotConversation {
-    // Удаляет пользователя из беседы
-    public static function DeleteUser($user, $peerID = 'callback'): bool
-    
-    // Закрепляет сообщение
-    public static function Pin($messageID, $peerID = 'callback'): bool
-    
-    // Изменяет заголовок беседы
-    public static function Title($title, $peerID = 'callback'): bool
-}
-
-class BotRequest {
-    // Вызывает метод $method из VK API и возвращает массив с результатом.
-    public static function API($method, $data = []): array|false
-}
-
-class BotGet {
-    // Возвращает from_id
-    public static function From(): int
-    
-    // Возвращает peer_id
-    public static function Peer(): int
-    
-    // Возвращает сообщение пользователя
-    public static function Meessage(): string
-    
-    // Возвращает true, если пользователь отправил PayLoad вместе с сообщением
-    public static function isPayLoad(): bool
-}
-
-class BotWall {
-    // Добавляет комментарий к посту. Если $ownerID указан как callback, то возьметься id группы бота
-    public static function AddComment($postID, $text, $ownerID = 'callback', $attach = [], $replyTo = 0, $stickerId = 0): void
-    
-    // Открывает/Закрывает комментарии к посту. $type может быть только open, или close. 
-    public static function Comment($postID, $type = 'close'): void
-}
-
-``` 
 <h2>Встроенный логгер</h2>
 <hr>
 В библиотеку встроен логгер. Методы логгера ниже:<br>
@@ -225,3 +166,63 @@ $keyBoard = [
     ]
 ];
 ```
+
+
+<h2>Встроенные классы для работы с VK API</h2>
+<hr>
+В библиотеке встроены классы для работы с VK API. Список методов ниже:<br>
+
+```php
+class BotMessage {
+    // Отсылает сообщение пользователю. Если $id равняется callback, то это отправит тому пользователю, от которого пришел callback сайту.
+    public static function Send($message, $id = 'callback', $attach = [], $keyBoard = []): bool
+
+    // Удаляет сообщение
+    public static function Delete($messageID): bool
+    
+    // Если $text == false, то бот будет записывать голосовое сообщение, если true, то будет печатать сообщение
+    public static function Activity($text = true, $peerID = 'callback'): bool
+
+    // Редактирует сообщение
+    public static function Edit($messageID, $text, $attach = [], $peerID = 'callback'): bool
+}
+
+class BotConversation {
+    // Удаляет пользователя из беседы
+    public static function DeleteUser($user, $peerID = 'callback'): bool
+    
+    // Закрепляет сообщение
+    public static function Pin($messageID, $peerID = 'callback'): bool
+    
+    // Изменяет заголовок беседы
+    public static function Title($title, $peerID = 'callback'): bool
+}
+
+class BotRequest {
+    // Вызывает метод $method из VK API и возвращает массив с результатом.
+    public static function API($method, $data = []): array|false
+}
+
+class BotGet {
+    // Возвращает from_id
+    public static function From(): int
+    
+    // Возвращает peer_id
+    public static function Peer(): int
+    
+    // Возвращает сообщение пользователя
+    public static function Message(): string
+    
+    // Возвращает true, если пользователь отправил PayLoad вместе с сообщением
+    public static function isPayLoad(): bool
+}
+
+class BotWall {
+    // Добавляет комментарий к посту. Если $ownerID указан как callback, то возьметься id группы бота
+    public static function AddComment($postID, $text, $ownerID = 'callback', $attach = [], $replyTo = 0, $stickerId = 0): void
+    
+    // Открывает/Закрывает комментарии к посту. $type может быть только open, или close. 
+    public static function Comment($postID, $type = 'close'): void
+}
+
+``` 
