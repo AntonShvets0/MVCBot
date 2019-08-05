@@ -189,6 +189,9 @@ class BotMessage {
 
 class BotConversation {
 
+    // Вернет true, если бот -- админ
+    public static function IsAdmin(): bool
+    
     // Возвращает имя беседы
     public static function GetName(): string
     
@@ -196,7 +199,7 @@ class BotConversation {
     public static function GetOwnerID(): int
     
     // Возвращает ID админов
-    public static function GetAdminsID(): array
+    public static function GetAdminsID(): array|bool
     
     // Возвращает информацию из метода messages.getConversationsById
     public static function GetInfo($peerID = 'callback', $fields = []): array
@@ -213,7 +216,7 @@ class BotConversation {
 
 class BotRequest {
     // Вызывает метод $method из VK API и возвращает массив с результатом.
-    public static function API($method, $data = []): array|false
+    public static function API($method, $data = []): array|bool
 }
 
 class BotGet {

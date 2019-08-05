@@ -42,6 +42,7 @@ class Logger
         if (DEBUG) {
             $data = date('H:i:s');
             $file = fopen(self::GetFile(), 'a+');
+            chmod(self::GetFile(), 0777);
             fwrite($file, "[{$data}] [{$type}]: {$message}" . PHP_EOL);
             fclose($file);
         }

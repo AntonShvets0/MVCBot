@@ -19,6 +19,16 @@ class BotConversation extends BotMessage
     }
 
     /**
+     * @return bool
+     */
+    public static function IsAdmin()
+    {
+        $data = self::GetInfo();
+        return $data != false;
+    }
+
+
+    /**
      * @return int
      * Возвращает id создателя беседы
      */
@@ -39,7 +49,7 @@ class BotConversation extends BotMessage
     /**
      * @param string $peerID
      * @param array $fields
-     * @return array
+     * @return array|false
      * Возвращает информацию о беседе
      */
     public static function GetInfo($peerID = 'callback', $fields = [])
@@ -48,7 +58,7 @@ class BotConversation extends BotMessage
             $peerID = BotGet::Peer();
         }
         $data = self::API('messages.getConversationsById', ['peer_ids' => $peerID, 'fields' => Utils::Join($fields)]);
-        return $data[0];
+        return isset($data[0]) ? $data[0] : false;
     }
 
     /**

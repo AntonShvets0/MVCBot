@@ -18,7 +18,10 @@ if (DEBUG) {
 }
 /* ВКЛЮЧАЕМ ПОКАЗ ОШИБОК */
 
-define('ROOT', dirname(__FILE__)); // Главная папка проекта
+// define('ROOT', dirname(__FILE__)); // Главная папка проекта
+
+define('ROOT', $_SERVER['DOCUMENT_ROOT']); // Главная папка проекта
+
 define('CONFIG', parse_ini_file(ROOT . '/Config/config.ini', true)); // Получаем настройки
 
 /*========БАЗОВЫЕ НАСТРОЙКИ========*/
