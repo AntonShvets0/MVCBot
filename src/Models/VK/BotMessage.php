@@ -84,14 +84,14 @@ class BotMessage extends BotRequest
         }
 
         $keyBoard = self::CreateKeyBoard($keyBoard);
-        $message = str_replace('<br>', PHP_EOL, $message);
+        $message = str_replace(['<br />', '<br>'], PHP_EOL, $message);
 
         $count = (mb_strlen($message / 4000)); // Ограничение в вк по кол-ву символов на сообщение -- 4000
         $count = $count > 1 ? $count : 1;
 
         $data = false;
 
-        for ($i = 0; $i <= $count; $i++) {
+        for ($i = 0; $i < $count; $i++) {
             $msg = mb_substr($message, $i * 4000, 4000);
 
             $isLastI = $i >= $count;
