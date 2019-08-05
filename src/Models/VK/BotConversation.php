@@ -15,7 +15,8 @@ class BotConversation extends BotMessage
      */
     public static function GetName()
     {
-        return self::GetInfo()['chat_settings']['title'];
+        $data = self::GetInfo();
+        return $data ? $data['chat_settings']['title'] : false;
     }
 
     /**
@@ -23,8 +24,11 @@ class BotConversation extends BotMessage
      */
     public static function IsAdmin()
     {
-        $data = self::GetInfo();
-        return $data != false;
+        $data = self::GetAdminsID();
+        if (!$data) {
+            return false;
+        }
+        return in_array(-GROUP, $data);
     }
 
 
@@ -34,16 +38,18 @@ class BotConversation extends BotMessage
      */
     public static function GetOwnerID()
     {
-        return self::GetInfo()['chat_settings']['owner_id'];
+        $data = self::GetInfo();
+        return $data ? $data['chat_settings']['owner_id'] : false;
     }
 
     /**
-     * @return array
+     * @return array|bool
      * Возвращает id пользователей, у которых есть админка
      */
     public static function GetAdminsID()
     {
-        return self::GetInfo()['chat_settings']['admin_ids'];
+        $data = self::GetInfo();
+        return $data ? $data['chat_settings']['admin_ids'] : false;
     }
 
     /**
