@@ -109,6 +109,7 @@ class BotConversation extends BotMessage
         if ($peerID == 'callback') {
             $peerID = BotGet::Peer();
         }
+        $peerID = Utils::GoId($peerID);
 
         return self::API('messages.removeChatUser', ['chat_id' => $peerID, 'member_id' => $user]);
     }

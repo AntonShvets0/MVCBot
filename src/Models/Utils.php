@@ -53,4 +53,9 @@ class Utils
 
         return $value . $suffix[$suffix_key];
     }
+
+    public static function GoId($id)
+    {
+        return ltrim(ltrim($id, 2), '0');
+    }
 }
