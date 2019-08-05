@@ -188,6 +188,19 @@ class BotMessage {
 }
 
 class BotConversation {
+
+    // Возвращает имя беседы
+    public static function GetName(): string
+    
+    // Возвращает ID создателя
+    public static function GetOwnerID(): int
+    
+    // Возвращает ID админов
+    public static function GetAdminsID(): array
+    
+    // Возвращает информацию из метода messages.getConversationsById
+    public static function GetInfo($peerID = 'callback', $fields = []): array
+    
     // Удаляет пользователя из беседы
     public static function DeleteUser($user, $peerID = 'callback'): bool
     

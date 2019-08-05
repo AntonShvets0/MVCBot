@@ -10,6 +10,48 @@ require_once ROOT . '/Models/VK/BotMessage.php';
 class BotConversation extends BotMessage
 {
     /**
+     * @return string
+     * Возвращает имя беседы
+     */
+    public static function GetName()
+    {
+        return self::GetInfo()['chat_settings']['title'];
+    }
+
+    /**
+     * @return int
+     * Возвращает id создателя беседы
+     */
+    public static function GetOwnerID()
+    {
+        return self::GetInfo()['chat_settings']['owner_id'];
+    }
+
+    /**
+     * @return array
+     * Возвращает id пользователей, у которых есть админка
+     */
+    public static function GetAdminsID()
+    {
+        return self::GetInfo()['chat_settings']['admin_ids'];
+    }
+
+    /**
+     * @param string $peerID
+     * @param array $fields
+     * @return array
+     * Возвращает информацию о беседе
+     */
+    public static function GetInfo($peerID = 'callback', $fields = [])
+    {
+        if ($peerID == 'callback') {
+            $peerID = BotGet::Peer();
+        }
+        $data = self::API('messages.getConversationById', ['peer_ids' => $peerID, 'fields' => Utils::Join($fields)]);
+        return $data[0];
+    }
+
+    /**
      * @param string $peerID
      * @return bool
      * Удаляет из беседы фото
