@@ -64,7 +64,7 @@ class BotConversation extends BotMessage
             $peerID = BotGet::Peer();
         }
         $data = self::API('messages.getConversationsById', ['peer_ids' => $peerID, 'fields' => Utils::Join($fields)]);
-        return isset($data[0]) ? $data[0] : false;
+        return isset($data['items'][0]) ? $data['items'][0] : false;
     }
 
     /**
