@@ -84,18 +84,34 @@ class BotMessage extends BotRequest
         }
 
         $keyBoard = self::CreateKeyBoard($keyBoard);
+        $message = str_replace('<br>', PHP_EOL, $message);
 
-        $data = [
-            'random_id' => mt_rand(0, 1000),
-            'peer_id' => $id,
-            'message' => $message,
-            'attachment' => Utils::Join($attach),
-            'keyboard' => $keyBoard
-        ];
+        $count = (mb_strlen($message / 4000)); // Ограничение в вк по кол-ву символов на сообщение -- 4000
+        $count = $count > 1 ? $count : 1;
+
+        $data = false;
+
+        for ($i = 0; $i <= $count; $i++) {
+            $msg = mb_substr($message, $i * 4000, 4000);
+
+            $isLastI = $i >= $count;
+
+            $data = [
+                'random_id' => mt_rand(0, 1000),
+                'peer_id' => $id,
+                'message' => $msg,
+            ];
+
+            if ($isLastI) {
+                $data['attachment'] = Utils::Join($attach);
+                $data['keyboard'] = $keyBoard;
+            }
+
+            $data = self::API('messages.send', $data);
+        }
 
         Logger::Info("Message \"{$message}\" to {$id}");
 
-        $data = self::API('messages.send', $data);
         return $data ? true : false;
     }
 
