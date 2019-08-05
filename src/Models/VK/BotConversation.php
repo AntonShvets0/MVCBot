@@ -47,7 +47,7 @@ class BotConversation extends BotMessage
         if ($peerID == 'callback') {
             $peerID = BotGet::Peer();
         }
-        $data = self::API('messages.getConversationById', ['peer_ids' => $peerID, 'fields' => Utils::Join($fields)]);
+        $data = self::API('messages.getConversationsById', ['peer_ids' => $peerID, 'fields' => Utils::Join($fields)]);
         return $data[0];
     }
 

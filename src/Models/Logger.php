@@ -41,12 +41,13 @@ class Logger
     {
         if (DEBUG) {
             $data = date('H:i:s');
-            file_put_contents(self::GetFile(), "[$data] [{$type}]: $message" . PHP_EOL, FILE_APPEND);
+            $file = fopen(self::GetFile(), 'a+');
+            fwrite($file, "[{$data}] [{$type}]: {$message}" . PHP_EOL);
+            fclose($file);
         }
     }
 
     /**
-     * @param string $type
      * @return string
      * Определяет файл для записи
      */
