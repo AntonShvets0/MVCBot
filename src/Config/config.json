@@ -1,0 +1,15 @@
+{
+  "vkCallbackData": {
+    "secret": "Секретный ключ",
+    "confirm": "Код подтверждения"
+  },
+  "vkSendData": {
+    "v": 5.81,
+    "access_token": "Токен группы"
+  },
+  "data": {
+    "errorChar": "@",
+    "unknownCommand": "ОШИБКА: Неизвестная команда '{command}'",
+    "error": "ОШИБКА: {error}"
+  }
+}

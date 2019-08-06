@@ -8,6 +8,7 @@
 
 /*========БАЗОВЫЕ НАСТРОЙКИ========*/
 const DEBUG = true; // Если нужно отключить дебаг режим -- поставьте false
+const CONFIG_FILE = 'ini'; // Если желаете хранить данные в JSON -- измените значение на json
 
 mb_internal_encoding('utf-8'); // Устанавливаем кодировку
 
@@ -22,7 +23,13 @@ if (DEBUG) {
 
 define('ROOT', $_SERVER['DOCUMENT_ROOT']); // Главная папка проекта
 
-define('CONFIG', parse_ini_file(ROOT . '/Config/config.ini', true)); // Получаем настройки
+if (CONFIG_FILE == 'ini') {
+    define('CONFIG', parse_ini_file(ROOT . '/Config/config.ini', true)); // Получаем настройки
+} elseif (CONFIG_FILE == 'json') {
+    define('CONFIG', json_decode(file_get_contents(ROOT . '/Config/config.json'), true));
+} else {
+    exit('Unknown CONFIG_FILE: ' . CONFIG_FILE);
+}
 
 /*========БАЗОВЫЕ НАСТРОЙКИ========*/
 
