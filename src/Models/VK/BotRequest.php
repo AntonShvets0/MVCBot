@@ -45,41 +45,37 @@ class BotRequest
             $data = http_build_query($data);
         }
 
-        if (self::UseCurl()) {
-            $ch = curl_init();
+        $ch = curl_init();
 
-            curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_POST, true);
 
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
-            curl_setopt($ch, CURLOPT_HEADER, false); // Убираем из результата заголовок HTTP
+        curl_setopt($ch, CURLOPT_HEADER, false); // Убираем из результата заголовок HTTP
 
-            curl_setopt($ch, CURLOPT_URL, $url); // Ссылка
-            curl_setopt($ch, CURLOPT_POSTFIELDS, $data); // POST данные
+        curl_setopt($ch, CURLOPT_URL, $url); // Ссылка
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $data); // POST данные
 
-            $response = curl_exec($ch);
-            curl_close($ch);
-        } else { // Если cURL не установлен, то выполняем запрос через file_get_contents
-            $header = ['http' =>
-                [
-                    'method'  => 'POST',
-                    'header'  => 'Content-Type: application/x-www-form-urlencoded',
-                    'content' => $data
-                ]
-            ];
-
-            $response = file_get_contents($url, false, stream_context_create($header));
-        }
+        $response = curl_exec($ch);
+        curl_close($ch);
 
         return $response;
     }
 
-    /**
-     * @return bool
-     * Проверка на cURL
-     */
-    private static function UseCurl()
+    public static function SendPostFile($url, $data)
     {
-        return extension_loaded('curl');
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: multipart/form-data; charset=UTF-8']);
+
+        $result = curl_exec($ch);
+
+        curl_close($ch);
+
+        return json_decode($result, true);
     }
 }

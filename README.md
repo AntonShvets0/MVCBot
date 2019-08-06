@@ -8,7 +8,8 @@
 <a href="#дополнительно" align="center">3. Дополнительно</a><br>
 <a href="#встроенный-логгер" align="center">4. Встроенный Логгер</a><br>
 <a href="#клавиатура-ботов" align="center">5. Клавиатура Ботов</a><br>
-<a href="#встроенные-классы-для-работы-с-vk-api" align="center">6. Встроенные классы для работы с VK API</a><br>
+<a href="#загрузка-изображений" align="center">6. Загрузка изображений</a><br>
+<a href="#встроенные-классы-для-работы-с-vk-api" align="center">7. Встроенные классы для работы с VK API</a><br>
 </p>
 </p>
 <hr>
@@ -167,6 +168,22 @@ $keyBoard = [
 ];
 ```
 
+<h2>Загрузка изображений</h2>
+<hr>
+Пока, в библиотеке присутствует лишь один метод для загрузки сообщений на сервера VK.
+Как он работает?
+Вы, вызываете метод 
+
+```php 
+BotUploader::Message($path, $peerID = 'callback')
+```
+
+В аргумент $path заносится путь к изображению, а в $peerID ID беседы, или человека. После чего, вам возвращаеться string с attach, которое можно прикрепить к сообщению.
+Пример:
+```php
+$attach = BotUploader::Message(ROOT . '/File/test.jpg'); // Возратит photo85635407_165186811_69dff3de4372ae9b6e
+BotMessage::Send('Картинка', 'callback', $attach);
+```
 
 <h2>Встроенные классы для работы с VK API</h2>
 <hr>
@@ -217,6 +234,15 @@ class BotConversation {
 class BotRequest {
     // Вызывает метод $method из VK API и возвращает массив с результатом.
     public static function API($method, $data = []): array|bool
+
+    // Отправляет файл на указанный URL.
+    public static function SendPostFile($url, $data): array|bool
+}
+
+class BotUploader {
+    // Загружает на сервера VK картинку, и возвращает attach этой картинки (пример -- photo85635407_165186811_69dff3de4372ae9b6e)
+    // ДАННЫЙ МЕТОД МОЖНО ИСПОЛЬЗОВАТЬ ТОЛЬКО ДЛЯ ЗАГРУЗКИ ИЗОБРАЖЕНИЙ В ЛИЧНЫЕ СООБЩЕНИЯ
+    public static function Message($path, $peerID = 'callback'): string
 }
 
 class BotGet {

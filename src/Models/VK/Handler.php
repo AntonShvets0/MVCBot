@@ -189,16 +189,16 @@ class Handler
         if (is_array($response)) {
             $message = $response[0];
             $attach = $response[1];
-            $keyBoard = $response[2];
+            $keyBoard = isset($response[2]) ? $response[2] : '';
         }
 
         if (mb_substr($message, 0, 1) == CONFIG['data']['errorChar']) {
-            $str = str_replace(['{command}', '{error}'], [$command, mb_substr($response, 1)], CONFIG['data']['error']);
+            $str = str_replace(['{command}', '{error}'], [$command, mb_substr($message, 1)], CONFIG['data']['error']);
             BotMessage::Send($str, 'callback', $attach, $keyBoard);
             return;
         }
 
-        BotMessage::Send($response, 'callback', $attach, $keyBoard);
+        BotMessage::Send($message, 'callback', $attach, $keyBoard);
     }
 
     /**

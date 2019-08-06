@@ -94,7 +94,7 @@ class BotMessage extends BotRequest
         for ($i = 0; $i < $count; $i++) {
             $msg = mb_substr($message, $i * 4000, 4000);
 
-            $isLastI = $i >= $count;
+            $isLastI = $i >= $count - 1;
 
             $data = [
                 'random_id' => mt_rand(0, 1000),
