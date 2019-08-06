@@ -94,7 +94,7 @@ class BotConversation extends BotMessage
             $peerID = BotGet::Peer();
         }
 
-        $data = self::API('messages.editChat', ['chat_id' => $peerID, 'title' => $title]);
+        $data = self::API('messages.editChat', ['chat_id' => Utils::GoId($peerID), 'title' => $title]);
 
         return $data;
     }
