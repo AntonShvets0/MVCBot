@@ -1,0 +1,30 @@
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <p class="lead text-center mt-5">Установка MVC PHP Bot</p>
+            <p class="small text-center">Шаг 1. ACCESS TOKEN и секретный ключ</p>
+            <div class="text-center">
+                <form action="act.php?do=access" method="post">
+                    <input type="text" class="form-control" placeholder="Токен" name="token">
+                    <input type="text" class="form-control" placeholder="Секретный ключ. Придумайте любой. Он нужен, чтобы не подделывали запросы" name="secret">
+                    <input type="submit" class="btn btn-success w-100 mt-2" value="Далее">
+                    <a class="btn btn-secondary mt-2 w-100" data-toggle="collapse" href="#token" role="button" aria-expanded="false" aria-controls="token">Что такое "Токен"</a>
+                    <div class="collapse" id="token">
+                        <div class="card card-body">
+                            Токен -- это вещь, которая позволяет отсылать сообщения, кикать людей, и т.д от имени вашей группы. <br>
+                            Как его получить?<br>
+                            <ul type="square">
+                                <li>Зайдите в Настройки Группы <br><img src="image/1.jpg" alt="token1"> </li>
+                                <li>Перейдите во вкладку "Работа с API"<br><img src="image/2.jpg" alt="token2"> </li>
+                                <li>Нажмите "Создать ключ" <br><img src="image/3.jpg" alt="token3"> </li>
+                                <li>Выберите все галки, чтобы бот мог работать корректно <br><img src="image/4.jpg" alt="token4"> </li>
+                                <li>Подтвердите операцию <br><img src="image/5.jpg" alt="token5"> </li>
+                                <li>Скопируйте токен из поля <br><img src="image/6.jpg" alt="token6"> </li>
+                            </ul>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
