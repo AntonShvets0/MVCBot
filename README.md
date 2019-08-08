@@ -254,6 +254,9 @@ class BotUploader {
 }
 
 class BotGet {
+    // Возвратит true, если запрос из беседы
+    public static function IsConversation(): bool
+    
     // Возвращает from_id
     public static function From(): int
     

@@ -104,7 +104,7 @@ HTACCESS;
 
         file_put_contents(ROOT . '/.htaccess', $htaccess);
         rm(ROOT . '/Install');
-        $server = Api('groups.addCallbackServer', ['group_id' => $group, 'url' => 'http://' . $_SERVER['HTTP_HOST'] . '/mvc', 'title' => 'MVCBot', 'secret_key' => $secret], $token)['response']['server_id'];
+        $server = Api('groups.addCallbackServer', ['group_id' => $group, 'url' => 'http://' . $_SERVER['HTTP_HOST'] . '/' . explode('?', $_SERVER['REQUEST_URI'])[0], 'title' => 'MVCBot', 'secret_key' => $secret], $token)['response']['server_id'];
 
         Api('groups.setCallbackSettings', ['group_id' => $group, 'server_id' => $server, 'api_version' => '5.80', 'message_new' => 1], $token);
 
