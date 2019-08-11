@@ -31,8 +31,7 @@ class BotKeyboard
      */
     public function AddButton($text, $color = 'secondary', $payLoad = [])
     {
-
-        if (count($this->result[$this->line]) >= 4) {
+        if (isset($this->result[$this->line]) && count($this->result[$this->line]) >= 4) {
             throw new Error('Max size keyboard 4x10');
         }
 

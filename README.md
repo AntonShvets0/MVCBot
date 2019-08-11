@@ -186,6 +186,9 @@ class BotKeyboard {
     // Создает кнопку, при клике на которую, открывается приложение
     public function AddAppButton($text, $app_id, $hash = '', $owner_id = 'callback'): void
     
+    // Скрывать ли клавиатуру после нажатия на кнопку
+    public function Hide($bool = true): void
+    
     // Возвращает json-клавиатуру для вк
     public function Build(): array|bool
 }

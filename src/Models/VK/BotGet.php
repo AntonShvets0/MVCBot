@@ -62,8 +62,8 @@ class BotGet
      */
     public static function Message()
     {
-        if (isset(VK['payload'])) {
-            return Utils::Join(VK['payload'], ' ');
+        if (self::HasPayLoad()) {
+            return Utils::Join(json_decode(VK['payload'], true), ' ');
         }
         return VK['text'];
     }
