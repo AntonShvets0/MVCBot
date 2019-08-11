@@ -73,17 +73,16 @@ class BotMessage
      * @param string $message
      * @param string|int $id
      * @param array|string $attach
-     * @param array $keyBoard
+     * @param string $keyBoard
      * @return bool
      * Отправляет сообщение
      */
-    public static function Send($message, $id = 'callback', $attach = [], $keyBoard = [])
+    public static function Send($message, $id = 'callback', $attach = [], $keyBoard = "")
     {
         if ($id == 'callback') {
             $id = BotGet::GetID();
         }
 
-        $keyBoard = self::CreateKeyBoard($keyBoard);
         $message = str_replace(['<br />', '<br>'], PHP_EOL, $message);
 
         $count = mb_strlen($message) / 4000; // Ограничение в вк по кол-ву символов на сообщение -- 4000
@@ -113,46 +112,5 @@ class BotMessage
         Logger::Info("Message \"{$message}\" to {$id}", 2);
 
         return $data ? true : false;
-    }
-
-    /**
-     * @param array $keyBoard
-     * @param bool $vkStyle
-     * @return string
-     * Создает JSON-клавиатуру для VK
-     */
-    private static function CreateKeyBoard($keyBoard, $vkStyle = false)
-    {
-        if ($vkStyle) {
-            return json_encode($vkStyle, true);
-        }
-
-        $json = [
-            'one_time' => array_shift($keyBoard),
-            'buttons' => [
-
-            ]
-        ];
-
-        foreach ($keyBoard as $item) {
-            $json['buttons'][] = self::CreateKeyBoardRows($item);
-        }
-
-        return json_encode($json, JSON_UNESCAPED_UNICODE);
-    }
-
-    /**
-     * @param $array
-     * @return array
-     */
-    private static function CreateKeyBoardRows($array)
-    {
-        $result = [];
-
-        foreach ($array as $name => $data) {
-            $result[] = ['action' => ['label' => $name, 'payload' => json_encode($data[1])], 'color' => $data[0]];
-        }
-
-        return $result;
     }
 }
