@@ -180,14 +180,17 @@ class Handler
 
         $message = explode(' ', $message);
 
-        if (self::$useAppeal) {
-            $appeal = array_shift($message);
-            if (!self::$strictCheck) {
-                $appeal = self::FormatAppeal($appeal);
-            }
+        if (!BotGet::HasPayLoad()) {
 
-            if (!in_array($appeal, self::$appealList)) {
-                return;
+            if (self::$useAppeal) {
+                $appeal = array_shift($message);
+                if (!self::$strictCheck) {
+                    $appeal = self::FormatAppeal($appeal);
+                }
+
+                if (!in_array($appeal, self::$appealList)) {
+                    return;
+                }
             }
         }
 
