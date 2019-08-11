@@ -170,18 +170,17 @@ class Handler
     public static function Run()
     {
         $message = BotGet::Message();
-        if (self::$ignoreOtherMessages) {
-            $firstChar = mb_substr($message, 0, 1);
-            if (!in_array($firstChar, self::$noIgnoreChar)) {
-                return;
-            }
-            $message = mb_substr($message, 1);
-        }
-
-        $message = explode(' ', $message);
 
         if (!BotGet::HasPayLoad()) {
+            if (self::$ignoreOtherMessages) {
+                $firstChar = mb_substr($message, 0, 1);
+                if (!in_array($firstChar, self::$noIgnoreChar)) {
+                    return;
+                }
+                $message = mb_substr($message, 1);
+            }
 
+            $message = explode(' ', $message);
             if (self::$useAppeal) {
                 $appeal = array_shift($message);
                 if (!self::$strictCheck) {
@@ -192,6 +191,8 @@ class Handler
                     return;
                 }
             }
+        } else {
+            $message = explode(' ', $message);
         }
 
         $command = array_shift($message);
@@ -232,7 +233,8 @@ class Handler
      * @return string
      * Форматирует обращение
      */
-    private static function FormatAppeal($appeal)
+    private
+    static function FormatAppeal($appeal)
     {
         $lastChar = mb_substr($appeal, mb_strlen($appeal) - 1);
 
