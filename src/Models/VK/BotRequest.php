@@ -21,12 +21,12 @@ class BotRequest
     {
         $data = array_merge($data, CONFIG['vkSendData']);
 
-        Logger::Info("Send request https://api.vk.com/method/{$method}, data: " . json_encode($data));
+        Logger::Info("Send request https://api.vk.com/method/{$method}, data: " . json_encode($data, JSON_UNESCAPED_UNICODE), 2);
 
         $response = json_decode(self::SendPost('https://api.vk.com/method/' . $method, $data), true);
 
         if (isset($response['error'])) {
-            Logger::Error("Response error(#{$response['error']['error_code']}): {$response['error']['error_msg']}");
+            Logger::Error("Response error(#{$response['error']['error_code']}): {$response['error']['error_msg']}", 1);
             return false;
         }
 

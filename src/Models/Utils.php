@@ -20,18 +20,15 @@ class Utils
     /**
      * @param $array
      * @param string $separator
+     * @param int $offset
      * @return string
      * Соединяет массив
      */
-    public static function Join($array, $separator = ',')
+    public static function Join($array, $separator = ',', $offset = 0)
     {
-        $result = "";
-
         if (is_array($array)) {
-            foreach ($array as $item) {
-                $result .= $item . $separator;
-            }
-            $result = mb_substr($result, 0, -mb_strlen($separator));
+            $array = array_slice($array, $offset);
+            $result = implode($separator, $array);
         } else {
             $result = $array;
         }

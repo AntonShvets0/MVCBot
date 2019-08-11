@@ -7,7 +7,7 @@
 
 require_once ROOT . '/Models/VK/BotMessage.php';
 
-class BotConversation extends BotMessage
+class BotConversation
 {
     /**
      * @return string
@@ -63,8 +63,8 @@ class BotConversation extends BotMessage
         if ($peerID == 'callback') {
             $peerID = BotGet::Peer();
         }
-        $data = self::API('messages.getConversationsById', ['peer_ids' => $peerID, 'fields' => Utils::Join($fields)]);
-        return isset($data['items'][0]) ? $data['items'][0] : false;
+        $data = BotRequest::API('messages.getConversationsById', ['peer_ids' => $peerID, 'fields' => Utils::Join($fields)]);
+        return $data['items'][0] ?? false;
     }
 
     /**
@@ -78,7 +78,7 @@ class BotConversation extends BotMessage
             $peerID = BotGet::Peer();
         }
 
-        $data = self::API('messages.deleteChatPhoto', ['chat_id' => $peerID]);
+        $data = BotRequest::API('messages.deleteChatPhoto', ['chat_id' => $peerID]);
         return !$data ? false : true;
     }
 
@@ -94,7 +94,7 @@ class BotConversation extends BotMessage
             $peerID = BotGet::Peer();
         }
 
-        $data = self::API('messages.editChat', ['chat_id' => Utils::GoId($peerID), 'title' => $title]);
+        $data = BotRequest::API('messages.editChat', ['chat_id' => Utils::GoId($peerID), 'title' => $title]);
 
         return $data;
     }
@@ -111,7 +111,7 @@ class BotConversation extends BotMessage
         }
         $peerID = Utils::GoId($peerID);
 
-        return self::API('messages.removeChatUser', ['chat_id' => $peerID, 'member_id' => $user]);
+        return BotRequest::API('messages.removeChatUser', ['chat_id' => $peerID, 'member_id' => $user]);
     }
 
     /**
@@ -125,6 +125,6 @@ class BotConversation extends BotMessage
         if ($peerID == 'callback') {
             $peerID = BotGet::Peer();
         }
-        return !self::API('messages.pin', ['peer_id' => $peerID, 'message_id' => $messageID]) ? false : true;
+        return !BotRequest::API('messages.pin', ['peer_id' => $peerID, 'message_id' => $messageID]) ? false : true;
     }
 }

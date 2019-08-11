@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * @class BotUploader
+ * Нужен для загрузки изображений
+ */
+
 require_once ROOT . '/Models/VK/BotGet.php';
 
 class BotUploader

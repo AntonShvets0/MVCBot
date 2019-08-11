@@ -48,6 +48,29 @@ class Handler
     private static $functionList = [];
 
     /**
+     * @var string
+     */
+    private static $timeout = '*';
+
+    /**
+     * @param string|int $second
+     * Устанавливает таймаут
+     */
+    public static function SetTimeout($second = '*')
+    {
+        self::$timeout = $second;
+    }
+
+    /**
+     * @return string
+     */
+    public static function GetTimeout()
+    {
+        return self::$timeout;
+    }
+
+
+    /**
      * @param string|array $function
      * @param mixed $controller
      * @param bool $onlyPayLoad
@@ -189,7 +212,7 @@ class Handler
         if (is_array($response)) {
             $message = $response[0];
             $attach = $response[1];
-            $keyBoard = isset($response[2]) ? $response[2] : '';
+            $keyBoard = $response[2] ?? '';
         }
 
         if (mb_substr($message, 0, 1) == CONFIG['data']['errorChar']) {

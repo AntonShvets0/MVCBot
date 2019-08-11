@@ -9,7 +9,7 @@ require_once ROOT . '/Models/VK/BotRequest.php';
 require_once ROOT . '/Models/VK/BotGet.php';
 require_once ROOT . '/Models/Utils.php';
 
-class BotMessage extends BotRequest
+class BotMessage
 {
     /**
      * @param int $messageID
@@ -25,7 +25,7 @@ class BotMessage extends BotRequest
             $peerID = BotGet::Peer();
         }
 
-        return self::API('messages.edit', ['peer_id' => $peerID, 'message' => $text, 'message_id' => $messageID, 'attachment' => Utils::Join($attach)]);
+        return BotRequest::API('messages.edit', ['peer_id' => $peerID, 'message' => $text, 'message_id' => $messageID, 'attachment' => Utils::Join($attach)]);
     }
 
     /**
@@ -41,7 +41,7 @@ class BotMessage extends BotRequest
         }
 
         $type = $bool ? 'typing' : 'audiomessage';
-        $data = self::API('messages.setActivity', ['peer_id' => $peerID, 'type' => $type]);
+        $data = BotRequest::API('messages.setActivity', ['peer_id' => $peerID, 'type' => $type]);
 
         return $data;
     }
@@ -55,7 +55,7 @@ class BotMessage extends BotRequest
     {
         $messageID = Utils::Join($messageID);
 
-        $data = self::API('messages.delete', ['message_ids' => $messageID, 'delete_for_all' => 1]);
+        $data = BotRequest::API('messages.delete', ['message_ids' => $messageID, 'delete_for_all' => 1]);
         $bool = false;
 
         foreach ($data as $val) {
@@ -107,10 +107,10 @@ class BotMessage extends BotRequest
                 $data['keyboard'] = $keyBoard;
             }
 
-            $data = self::API('messages.send', $data);
+            $data = BotRequest::API('messages.send', $data);
         }
 
-        Logger::Info("Message \"{$message}\" to {$id}");
+        Logger::Info("Message \"{$message}\" to {$id}", 2);
 
         return $data ? true : false;
     }

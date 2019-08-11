@@ -9,51 +9,58 @@ class Logger
 {
     /**
      * @param string $message
+     * @param int $level
+     * @param bool $error
      */
-    public static function Error($message)
+    public static function Error($message, $level = 1, $error = false)
     {
-        self::Add($message, 'Error');
+        self::Add($message, 'Error', $level, $error);
     }
 
     /**
-     * @param string $message
+     * @param $message
+     * @param int $level
+     * @param bool $error
      */
-    public static function Warning($message)
+    public static function Warning($message, $level = 1, $error = false)
     {
-        self::Add($message, 'Warning');
+        self::Add($message, 'Warning', $level, $error);
     }
 
     /**
-     * @param string $message
+     * @param $message
+     * @param int $level
+     * @param bool $error
      */
-    public static function Info($message)
+    public static function Info($message, $level = 1, $error = false)
     {
-        self::Add($message, 'Default');
+        self::Add($message, 'Default', $level, $error);
     }
 
     /**
-     * @param string $message
+     * @param $message
      * @param string $type
-     * @return void
+     * @param int $level
+     * @param bool $error
      * Записывает лог в файл
      */
-    private static function Add($message, $type = 'Default')
+    private static function Add($message, $type = 'Default', $level = 1, $error = false)
     {
-        if (DEBUG) {
+        if (LOGGER_LEVEL >= $level) {
             $data = date('H:i:s');
-            $file = fopen(self::GetFile(), 'a+');
-            chmod(self::GetFile(), 0777);
+            $file = fopen(self::GetFile($error), 'a+');
             fwrite($file, "[{$data}] [{$type}]: {$message}" . PHP_EOL);
             fclose($file);
         }
     }
 
     /**
+     * @param bool $error
      * @return string
      * Определяет файл для записи
      */
-    private static function GetFile()
+    private static function GetFile($error = false)
     {
-        return ROOT . '/Log/' . date('d_m_y') . '.txt';
+        return !$error ? ROOT . '/Log/' . date('d_m_y') . '.txt' : ROOT . '/Log/' . date('d_m_y') . '_err.txt';
     }
 }
