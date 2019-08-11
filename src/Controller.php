@@ -58,6 +58,7 @@ if (LOGGER_LEVEL >= 4) {
     }
     if (LOGGER_LEVEL >= 4) {
         set_exception_handler(function (Throwable $exception) {
+            echo 'ok'; // Выводим ok, чтобы CALLBACK API не ругался
             $message = $exception->getMessage();
             $line = $exception->getLine();
             $file = $exception->getFile();
